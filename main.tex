@@ -1,578 +1,370 @@
-\documentclass[12pt,a4paper]{article}
+% A LaTeX template for ARTICLE version of the MSc Thesis submissions to 
+% Politecnico di Milano (PoliMi) - School of Industrial and Information Engineering
+%
+% S. Bonetti, A. Gruttadauria, G. Mescolini, A. Zingaro
+% e-mail: template-tesi-ingind@polimi.it
+%
+% Last Revision: October 2021
+% Copyright 2021 Politecnico di Milano, Italy. Inc. NC-BY
+%
+% Modified by: Barbara Re, Francesco Caccia
+% Adapt to be used as the template for the report of the group project
+% of the course Computational Fluid Dynamics AA 22-23, 23-24, 24-25
 
-% Language setting
-\usepackage[british]{babel}
+\documentclass[11pt,a4paper]{article} 
 
-% Set page size and margins
-\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
-
-%----------- APA style references & citations (starting) ---
-% Useful packages
-%\usepackage[natbibapa]{apacite} % APA-style citations.
-
-\usepackage[style=apa, backend=biber]{biblatex} % APA 7th edition style citations using biblatex
-\addbibresource{references.bib} % Your .bib file
-
-% Formatting DOI in APA-7 style
-%\renewcommand{\doiprefix}{https://doi.org/}
-
-% Add additional APA 7th edition requirements
-\DeclareLanguageMapping{british}{british-apa} % Set language mapping
-\DeclareFieldFormat[article]{volume}{\apanum{#1}} % Format volume number
-
-% Modify 'and' to '&' in the bibliography
-\renewcommand*{\finalnamedelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace\&\space}
-  
-%----------- APA style references & citations (ending) ---
-
-
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
-\usepackage{hyperref}
-%\usepackage{orcidlink}
-\usepackage[title]{appendix}
-\usepackage{mathrsfs}
-\usepackage{amsfonts}
-\usepackage{booktabs} % For \toprule, \midrule, \botrule
-\usepackage{caption}  % For \caption
-\usepackage{threeparttable} % For table footnotes
-\usepackage{algorithm}
-\usepackage{algorithmicx}
-\usepackage{algpseudocode}
-\usepackage{listings}
-\usepackage{enumitem}
-\usepackage{chngcntr}
-\usepackage{booktabs}
-\usepackage{lipsum}
-\usepackage{subcaption}
-\usepackage{authblk}
-\usepackage[T1]{fontenc}    % Font encoding
-\usepackage{csquotes}       % Include csquotes
-\usepackage{diagbox}
-\usepackage{comment}
-\usepackage{multicol}
-\usepackage{blindtext}
-
-% Customize line spacing
-\usepackage{setspace}
-\onehalfspacing % 1.5 line spacing
-
-% Redefine section and subsection numbering format
+%-------------------------------------------------------------------------
+%	REQUIRED PACKAGES AND  CONFIGURATIONS
+%-------------------------------------------------------------------------
+% PACKAGES FOR TITLES
 \usepackage{titlesec}
+\usepackage{color}
 
-  
-% Customize line numbering format to right-align line numbers
-\usepackage{lineno} % Add the lineno package
-\renewcommand\linenumberfont{\normalfont\scriptsize\sffamily\color{blue}}
-\rightlinenumbers % Right-align line numbers
+% PACKAGES FOR LANGUAGE AND FONT
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc} % Font encoding
 
-% \linenumbers % Enable line numbering
+% PACKAGES FOR IMAGES
+\usepackage{graphicx}
+\graphicspath{{Images/}}
+\usepackage{eso-pic} % For the background picture on the title page
+\usepackage{subfig} % Numbered and caption subfigures using \subfloat
+\usepackage{caption} % Coloured captions
+\usepackage{transparent}
 
-% Define a new command for the fourth-level title.
-\newcommand{\subsubsubsection}[1]{%
-  \vspace{\baselineskip}% Add some space
-  \noindent\textbf{#1\\}\quad% Adjust formatting as needed
-}
-% Change the position of the table caption above the table
-\usepackage{float}   % for customizing caption position
-\usepackage{caption} % for customizing caption format
-\captionsetup[table]{position=top} % caption position for tables
+% STANDARD MATH PACKAGES
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage[overload]{empheq}  % For braced-style systems of equations
 
-% Define the unnumbered list
-\makeatletter
-\newenvironment{unlist}{%
-  \begin{list}{}{%
-    \setlength{\labelwidth}{0pt}%
-    \setlength{\labelsep}{0pt}%
-    \setlength{\leftmargin}{2em}%
-    \setlength{\itemindent}{-2em}%
-    \setlength{\topsep}{\medskipamount}%
-    \setlength{\itemsep}{3pt}%
-  }%
-}{%
-  \end{list}%
-}
-\makeatother
+% PACKAGES FOR TABLES
+\usepackage{tabularx}
+\usepackage{longtable} % tables that can span several pages
+\usepackage{colortbl}
+\usepackage{booktabs}
 
-% Suppress the warning about \@parboxrestore
-\pdfsuppresswarningpagegroup=1
+% PACKAGES FOR ALGORITHMS (PSEUDO-CODE)
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
-%-------------------------------------------
-% Paper Head
-%-------------------------------------------
+% PACKAGES FOR REFERENCES & BIBLIOGRAPHY
+\usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=black]{hyperref} % Adds clickable links at references
+\usepackage{cleveref}
+\usepackage[square, numbers, sort&compress]{natbib} % Square brackets, citing references with numbers, citations sorted by appearance in the text and compressed
+\bibliographystyle{plain} 
 
-\title{\ CFD analysis of 2D diverterless supersonic inlet\\
-\vspace{0.25cm}
-\large Computational Fluid Dynamics - Prof. B. Re\\
-CFD final project, group 4
-}
+% PACKAGES FOR THE APPENDIX
+\usepackage{appendix}
 
-\author{Alloggio Davide\footnote{\footnotesize Student, Master Degree in Aeronautical Engineering, \texttt{davide.alloggio@mail.polimi.it}, PIN .}, Bergamini Alberto\footnote{\footnotesize Student, Master Degree in Aeronautical Engineering, \texttt{alberto.bergamini@mail.polimi.it}, PIN 10713817.}, Martina Buffoli\footnote{\footnotesize Student, Master Degree in Aeronautical Engineering, \texttt{martina.buffoli@mail.polimi.it}, PIN 10714071.}, De Luca Leo\footnote{\footnotesize Student, Master Degree in Aeronautical Engineering, \texttt{leo.deluca@mail.polimi.it}, PIN .}}
-\affil{Politecnico di Milano}
-\date{}
+% PACKAGES FOR ITEMIZE & ENUMERATES 
+\usepackage{enumitem}
 
+% OTHER PACKAGES
+\usepackage{amsthm,thmtools,xcolor} % Coloured "Theorem"
+\usepackage{comment} % Comment part of code
+\usepackage{fancyhdr} % Fancy headers and footers
+\usepackage{lipsum} % Insert dummy text
+\usepackage{tcolorbox} % Create coloured boxes (e.g. the one for the key-words)
+
+%-------------------------------------------------------------------------
+%	NEW COMMANDS DEFINED
+%-------------------------------------------------------------------------
+% EXAMPLES OF NEW COMMANDS -> here you see how to define new commands
+\newcommand{\bea}{\begin{eqnarray}} % Shortcut for equation arrays
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\e}[1]{\times 10^{#1}}  % Powers of 10 notation
+\newcommand{\mathbbm}[1]{\text{\usefont{U}{bbm}{m}{n}#1}} % From mathbbm.sty
+\newcommand{\pdev}[2]{\frac{\partial#1}{\partial#2}}
+% NB: you can also override some existing commands with the keyword \renewcommand
+
+%------------------------------------------------------------------------
+%	ADD YOUR PACKAGES (be careful of package interaction)
+%------------------------------------------------------------------------
+
+%------------------------------------------------------------------------
+%	ADD YOUR DEFINITIONS AND COMMANDS (be careful of existing commands)
+%------------------------------------------------------------------------
+
+% This file ends the configuration procedures (e.g. customizing commands, definition of new commands)
+\input{Configuration_files/config}
+
+% Insert here the info that will be displayed on your Title page 
+% -> title of your work
+\renewcommand{\title}{CFD analysis of 2D diverterless supersonic inlet}
+% -> Number of the group
+\newcommand{\group}{4}
+% You are less than 5, YOU HAVE to modify the file Configuration_files/title_page.tex, commenting the lines 19/20 about the fifth and/or fourth author
+\newcommand{\firstauthor}{Davide Alloggio, ID} 
+\newcommand{\secondauthor}{Alberto Bergamini, 10713817} 
+\newcommand{\thirdauthor}{Martina Buffoli, 10714071} 
+\newcommand{\fourthauthor}{Leo De Luca, ID}
+
+%-------------------------------------------------------------------------
+%	BEGIN OF YOUR DOCUMENT
+%-------------------------------------------------------------------------
 \begin{document}
-\maketitle
 
-\begin{abstract} 
+%-------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------
+% Do not change Configuration_files/TitlePage.tex (Modify it IF AND ONLY IF you need to add or delete the Co-advisors)
+% This file creates the Title Page of the document
+\input{Configuration_files/title_page}
 
-Investigation on the performances of a diverterless supersonic intake, with respect to a clean one, will be carried out. Results from CFD simulation executed with SU2 code on 2D geometries of both the diverterless and clean case will be presented and compared to understand how pressure recovery, ... are affected by the presence of a compression surface integrated to the intake.  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%     THESIS MAIN TEXT     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\end{abstract}
+%-------------------------------------------------------------------------
+% INTRODUCTION
+%-------------------------------------------------------------------------
+\section{Problem statement}
+\label{sec:probStatement}
+This file provides the template for the report of the group project of the course.
+It contains information about the content of the report, as well as some useful tips about \texttt{LaTex} and the \texttt{.tex} document. It is based on the \texttt{LaTeX} template for the article version of the MSc Thesis submission.
 
-% \textbf{Keywords}: keyword1, keyword2, keyword3, keyword4, keyword5, keyword6.  
+This first page must contain all the relevant information:
+\begin{itemize}
+    \item title of the report,
+    \item number of the group,
+    \item name and student ID number of all authors.
+\end{itemize}
+Fill this information in \textsf{Lines 95--103} of the \texttt{.tex} file.
 
-%-------------------------------------------
-% Paper Body
-%-------------------------------------------
-%--- Section ---%
+Be sure to select a meaningful title, not necessarily the one indicated in the list of group projects.
 
+\textbf{The maximum length allowed for the pdf file is 15 pages}, including the bibliography. The exceeding pages will be discarded if a longer file is delivered. This could result in submitting incomplete work which will be evaluated accordingly.
 
-\section{Nomenclature}
-\vspace{-0.2cm}
-\begin{multicols*}{2}
-\subsection{Symbols and acronyms}
- \begin{tabbing}
-$T$\qquad \= Temperature (K)\\
-$P$ \> Pressure (Pa)\\
-$\rho$ \> Density (kg/T$^{3}$)\\
-$Ma$ \> Mach number (-)\\
-$Re$ \> Reynolds number (-) \\ 
-$\gamma$ \> Heat capacity ratio (-) \\
-$R$ \> Dry air constant (J/kgK) \\
-AIP \> Aerodynamic Interface Plane \\
-DSI \> Diverterless Supersonic Inlet \\
-\end{tabbing}
-\vspace{0.3 cm}
-\subsection{Subscripts}
-\begin{tabbing}
-$tot$\qquad \= total \\
-$\infty$ \> free-stream \\
-\end{tabbing}
-\end{multicols*}
+The first section of the report explains the \textbf{research question} providing minimal information to understand it. A title more specific than  \textbf{Problem statement} (as it is called in this template) should be chosen for this section.
+This section gives an overview of the problem you are solving, including the main \textbf{underlying hypothesis} and the goal of the work. It can include a concise scientific context or background important to understanding the reference solution or data. Avoid a detailed historical literature review of the problem under investigation; instead, make good use of citations. \\
 
-
-\vspace{0.15cm}
-
-\section{Introduction}
  In order to improve flow features at the inlet of aircraft engines, different techniques have been implemented. Among boundary layer diverters and bleed systems, addition of compression surfaces has proved to be a simple yet effective solution to improve pressure recovery and reduce distortion at the AIP. DSI are state-of-the-art applications, capable of diverting the boundary layer, hence reducing its ingestion in the intake and flow separation, at a low weight and cost. However, the shape of the compression bump must be well designed to obtain optimal results. Computational Fluid Dynamics (CFD) is a powerful tool for the assessment of performance of DSI with respect to the shape of the bump. Different 3D analyses of the flow field on a DSI have been carried out.
-This is an example of a new paragraph with a numbered footnote\footnote{\url{https://data.gov.uk/}} and a second footnote marker.\footnote{Example of footnote text.}
 
-\section{Mesh}\label{sec2}
 
-\subsection{}
 
-\subsection{}\label{subsec1}
+%------------------------------------------------------------------------
+% NUMERICAL METHODOLOGY
+%------------------------------------------------------------------------
+\section{Numerical simulation methodology}
+\label{sec:eqs}
+This section describes how the numerical simulations are carried out. It provides details and justifications about the modeling choices, the meshes, and the numerical schemes.
+Do not include the \texttt{.config} file or parts of it. Describe the options you consider important using words, rather than inserting option strings from the file.
 
-\subsubsection{}\label{subsubsec1}
+The goal of this section is to demonstrate your skills with CFD methodology and to convince us that the results shown in the next sections are trustworthy.
 
-\subsubsubsection{}
+\textbf{Suggestion:} modify the title of this section and the next (sub-)sections as needed. A focused, specific title of each (sub-)section helps in writing the content of that part.
 
-\vspace{-1.5cm}
-\section{Simulation features}\label{sec3}
+\subsection{Mesh construction}\label{sec:mesh}
+Provide information about the meshing process: identify any relevant challenges and explain how you have overcome them.
+Carefully select which pictures of the meshes to insert in the report.
+Categorize and organize the \textbf{quantitative information} about the mesh effectively.
 
-\subsection{}\label{subsec2}
+\subsection{Numerical methods}
+Describe the relevant information about the numerical scheme: convective scheme, turbulence models, boundary conditions (this information can be given also while describing the mesh in Subsec.~\ref{sec:mesh}).
+Remember that the goal of this report is to show that you can perform \textbf{trustworthy CFD simulations}. For example, do not write here the Navier-Stokes equations or the details of the iterative solver used in SU2.
 
-\subsubsection{}\label{subsubsec2}
+Ideally, the description of the methodology should be independent of the CFD software.
 
-\subsubsubsection{}
+\section{Results}
+This section reports and analyses the results. It can be split into a first part dedicated to validation, and a second one dedicated to the investigation of a new configuration.
+Carefully prepare the figures to show and select the most relevant ones that are needed to analyze your results and answer the research question.
 
-\section{How to Include Equations}\label{sec4}
+Figures and Tables have to contain a \textbf{caption} that describes \underline{clearly and exhaustively} their content and have to be properly referred to in the text.
 
-Equations in \LaTeX{} can either be inline or set as display equations. For
-inline equations use the \verb+$...$+ commands. Eg: the equation
-$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
 
-For display equations (with auto generated equation numbers)
-one can use the equation or eqnarray environments:
-\begin{equation}
-\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q},
-\label{eq1}
-\end{equation}
-where
-\begin{align}
-D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
-F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu
-\label{eq2}
-\end{align}
-Notice the use of \verb+\nonumber+ in the align environment at the end
-of each line, except the last, so as not to produce equation numbers on
-lines where no equation numbers are required. The \verb+\label{}+ command
-should only be used at the last line of an align environment where
-\verb+\nonumber+ is not used.
-\begin{equation}
-Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
-    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
-    + \frac{\ln(c_2/5)}{15} \right]
-\label{eq3}
-\end{equation}
-The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
-\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
-and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
-respectively 
-%(refer Subsubsection~\ref{subsubsec3}).
+\paragraph{Post-processing} Make each picture clear using a proper mix of colors, line styles, markers, colormaps, etc. Each figure must include readable axis labels and legends. If you compare colormap in different images, use the same color scale.
+If you compare a region of the flow field obtained with different methods, pay attention to selecting exactly the same portion of the domain. The indication of the coordinates may be useful in this case.
 
-Equations must be provided as editable text, either in a Word or LaTeX source file. They should be numbered consecutively through the manuscript as shown in Equations \ref{eq1}, \ref{eq2} and \ref{eq3}. In APA style, when discussing numbered equations in the text, write out the word “Equation” and give the number. For example, you would write “see Equation \ref{eq1}.”
-Use no punctuation after the equation if it appears at the end of a sentence; however, it is permissible (and may even be necessary) to place some form of punctuation after it (a comma or semi-colon, for example) if it appears in the middle of the sentence and is followed by text. In any case, maintain the coherence of all sentences with equations in them.
+\textbf{Suggestion:} Producing a clear and informative figure can be time-consuming: do not underestimate its importance.
 
 
-%--- Section ---%
-\section{How to Include Tables}\label{sec5}
-
-Use the table and tabular environments for basic tables --- see Tables~\ref{tab1} and \ref{tab2}, for example. Table \ref{tab1} is an sample figure including table footnotes. For more information, please see this help article on \href{https://www.overleaf.com/learn/latex/tables}{tables}. 
-
-\begin{table}[!ht]
-\caption{Sample table with footnotes\label{tab1}}
-\begin{threeparttable}
-\begin{tabular*}{\columnwidth}{@{\extracolsep\fill}llll@{\extracolsep\fill}}
-\toprule
-column 1 & column 2 & column 3 & column 4\\
-\midrule
-row 1 & data 1 & data 2 & data 3 \\
-row 2 & data 4 & data 5\tnote{1} & data 6 \\
-row 3 & data 7 & data 8 & data 9\tnote{2} \\
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}
-\item Source: This is an example of table footnote. This is an example of table footnote. This is an example of table footnote. This is an example of table footnote. This is an example of table footnote.
-\item[1] Example of a first table footnote.
-\item[2] Example of a second table footnote.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\begin{table*}[!ht]
-\caption{Example of a lengthy table which is set to full textwidth.\label{tab2}}
-\tabcolsep=0pt
-\begin{threeparttable}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc@{\extracolsep{\fill}}}
-\toprule
-& \multicolumn{3}{c}{Element 1\tnote{1}} & \multicolumn{3}{c}{Element 2\tnote{2}} \\
-\cmidrule(lr){2-4}\cmidrule(lr){5-7}
-Project & Energy & $\sigma_{\mathrm{calc}}$ & $\sigma_{\mathrm{expt}}$ & Energy & $\sigma_{\mathrm{calc}}$ & $\sigma_{\mathrm{expt}}$ \\
-\midrule
-Element 3 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
-Element 4 & 500 A & 961 & $922\pm10$ & 900 A & 1268 & $1092\pm40$ \\
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}
-\item Note: This is an example of table footnote this is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.
-\item[1] Example of a first table footnote.
-\item[2] Example of a second table footnote.
-\end{tablenotes}
-\end{threeparttable}
-\end{table*}
-
-
-%--- Section ---%
-\section{How to Include Figures}\label{sec6}
-
-First you have to upload the image file from your computer using the upload link in the file-tree menu. Then use the includegraphics command to include it in your document. Use the figure environment and the caption command to add a number and a caption to your figure. See the code for Figure \ref{fig:cat1} in this section for an example. As shown in Figures \ref{fig:cat1} and \ref{fig:multi_figs}, the images should be single-page documents. 
-
-Note that your figure will automatically be placed in the most appropriate place for it, given the surrounding text and taking into account other figures or tables that may be close by. You can find out more about adding images to your documents in this help article on \href{https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf}{including images on Overleaf}.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.4\linewidth]{figures/cat_momo_1.png}
-\caption{\label{fig:cat1}This cat picture is located at the 'figures' folder.}
-\end{figure}
-
-\subsection{More information about figures}
-
-As per display \LaTeX\ standards one has to use eps images for \verb+latex+ compilation and \verb+pdf/jpg/png+ images for
-\verb+pdflatex+ compilation. This is one of the major differences between \verb+latex+
-and \verb+pdflatex+. The images should be single-page documents. The command for inserting images
-for \verb+latex+ and \verb+pdflatex+ can be generalized. The package used to insert images in \verb+latex/pdflatex+ is the
-graphicx package. Figures can be inserted via the normal figure environment as shown in the below example:
-
-
-\begin{figure}[!ht]
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\linewidth]{figures/fig_a.png}
-        \caption{}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\linewidth]{figures/fig_b.png}
-        \caption{}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\linewidth]{figures/fig_c.png}
-        \caption{}
-    \end{subfigure}
-    \caption{Overall caption for the three figures: (a) caption for figure a, (b) caption for figure b, and (c) caption for figure c.}
-    \label{fig:multi_figs}
-\end{figure}
-
-
-\begin{verbatim}
-\begin{figure}[h]
-        \centering\includegraphics{<eps-file>}
-        \caption{<figure-caption>}
-        \label{<figure-label>}
-\end{figure}
-\end{verbatim}
-
-
-%--- Section ---%
-\section{How to Include Algorithms, Program Codes, and Listings}\label{sec8}
-Packages \verb+algorithm+, \verb+algorithmicx+, and \verb+algpseudocode+ are used for setting algorithms in latex.
-For this, one has to use the below format:
-
-\begin{verbatim}
-\begin{algorithm}
-\caption{<alg-caption>}\label{<alg-label>}
-\begin{algorithmic}[1]
-. . .
-\end{algorithmic}
-\end{algorithm}
-\end{verbatim}
-
-You may need to refer to the above-listed package documentation for more details before setting an \verb+algorithm+ environment.
-To set program codes, one has to use the \verb+program+ package. We need to use the \verb+\begin{program}+ \verb+...+
-\verb+\end{program}+ environment to set program codes.
-
-\begin{algorithm}[!ht]
-\caption{Calculate $y = x^n$}\label{algo1}
-\begin{algorithmic}[1]
-\Require $n \geq 0 \vee x \neq 0$
-\Ensure $y = x^n$
-\State $y \Leftarrow 1$
-\If{$n < 0$}
-        \State $X \Leftarrow 1 / x$
-        \State $N \Leftarrow -n$
-\Else
-        \State $X \Leftarrow x$
-        \State $N \Leftarrow n$
-\EndIf
-\While{$N \neq 0$}
-        \If{$N$ is even}
-            \State $X \Leftarrow X \times X$
-            \State $N \Leftarrow N / 2$
-        \Else[$N$ is odd]
-            \State $y \Leftarrow y \times X$
-            \State $N \Leftarrow N - 1$
-        \EndIf
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
-
-Similarly, for \verb+listings+, one has to use the \verb+listings+ package. To set environments similar to the \verb+verbatim+ environment, the \verb+\begin{lstlisting}+ \verb+... + \verb+\end{lstlisting}+ environment is used . Refer to the \verb+lstlisting+ package documentation for more details on this.
-
-\begin{minipage}{\hsize}%
-\lstset{language=Pascal}% Set your language (you can change the language for each code-block optionally)
-\begin{lstlisting}[frame=single,framexleftmargin=-1pt,framexrightmargin=-17pt,framesep=12pt,linewidth=0.95\textwidth]
-for i:=maxint to 0 do
-begin
-{ do nothing }
-end;
-Write('Case insensitive ');
-Write('Pascal keywords.');
-\end{lstlisting}
-\end{minipage}
-
-
-%--- Section ---%
-\section{Results and validation}\label{sec7}
-
-List in \LaTeX{} can be of three types: numbered, bulleted, and unnumbered. The ``enumerate'' environment produces a numbered list, the 
-``itemize'' environment produces a bulleted list, and the ``unlist''
-environment produces an unnumbered list.
-In each environment, a new entry is added via the \verb+\item+ command.
-
-\begin{enumerate}[label=\arabic*.]
-\item This is the 1st item
-\item Enumerate creates numbered lists, itemize creates bulleted lists, and unnumerate creates unnumbered lists.
-
-\begin{enumerate}[label=\alph*.]
-\item Second level numbered list. Enumerate creates numbered lists, itemize creates bulleted lists, and description creates unnumbered lists.
-\item Second level numbered list. Enumerate creates numbered lists, itemize creates bulleted lists, and description creates unnumbered lists.
-
-\begin{enumerate}[label=(\roman*)]
-\item Third level numbered list. Enumerate creates numbered lists, itemize creates bulleted lists, and description creates unnumbered lists.
-\item Third level numbered list. Enumerate creates numbered lists.
-\end{enumerate}
-
-\item Second level numbered list. Enumerate creates numbered lists, itemize creates bulleted lists, and description creates unnumbered lists.
-\end{enumerate}
-
-\item Numbered lists continue.
-\end{enumerate}
-Lists in \LaTeX{} can be of three types: enumerate, itemize, and description.
-In each environment, a new entry is added via the \verb+\item+ command.
-
-\begin{itemize}
-\item First level bulleted list. This is the 1st item
-\item First level bulleted list. Itemize creates bulleted lists, and description creates unnumbered lists.
-
-\begin{itemize}
-\item Second level dashed list. Itemize creates bulleted lists, and description creates unnumbered lists.
-\item Second level dashed list. Itemize creates bulleted lists, and description creates unnumbered lists.
-\end{itemize}
-
-\item First level bulleted list. Bullet lists continue.
-\end{itemize}
-
-\noindent
-Example of unnumbered list items:
-
-\begin{unlist}
-\item Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text.
-
-\item Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text.
-
-\item Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text. Sample unnumberd list text. 
-\end{unlist}
-
-
-%--- Section ---%
-\section{Conclusions and future developments}
-
-You can simply upload a \verb|.bib| file containing your BibTeX entries, created with a tool such as JabRef. You can then cite entries from it, like this: \textcite{greenwade93}. Just remember to specify a bibliography style, as well as the filename of the \verb|.bib|. You can find a \href{https://www.overleaf.com/help/97-how-to-include-a-bibliography-using-bibtex}{video tutorial here} to learn more about BibTeX.
-
-Here is an example citation when you want an author name like \textcite{collins2011a} to appear in the text. And here's how to do a parenthetic citation, when you want to mention a reference at the end of a sentence or part of a sentence \parencite{collins2013}. It is possible to cite multiple references at the same time \parencite{collins2011b,collins2016,lunn2007a,lunn2007b,ross2006,shannon1948}.
-
-If you have an \href{https://www.overleaf.com/user/subscription/plans}{upgraded account}, you can also import your Mendeley or Zotero library directly as a \verb|.bib| file, via the upload menu in the file-tree.
-
-\subsection{Citation in text}
-Please ensure that every reference cited in the text is also present in the reference list (and vice versa). Citations in the text should follow the referencing style used by the American Psychological Association. You are referred to the Publication Manual of the American Psychological Association (APA), Seventh Edition, ISBN 978-1-4338-3215-4, copies of which may be ordered online. References in the Abstract should be avoided, but if essential, then cite the author(s) and year(s). Unpublished results and personal communications are not recommended in the reference list but may be mentioned in the text. If these references are included in the reference list, they should follow the standard reference style of the journal and should include a substitution of the publication date with either ‘Unpublished results’ or ‘Personal communication’. The citation of a reference as ‘in press’ implies that the item has been accepted for publication. 
-
-An APA in-text citation includes only three items: the last name(s) of the author(s), the year the source was published, and sometimes the page or location of the information. More than one reference from the same author(s) in the same year must be identified by the letters ‘a’, ‘b’, ‘c’, etc., placed after the year of publication. The following paragraph shows examples of APA style of citations.
-
-Here is an example citation when you want an author name like \textcite{collins2011a} to appear in the text. And here's how to do a parenthetic citation when you want to mention a reference at the end of a sentence or part of a sentence \parencite{collins2013}. It is possible to cite multiple references at the same time \parencite{collins2011b,collins2016,lunn2007a,lunn2007b,ross2006,shannon1948}.
-
-The followings are examples of \verb+\textcite{...}+: \textcite{rahman2019centroidb}, \textcite{krizhevsky2012imagenet, horvath2018dna}, and \textcite{lecun2015deep, zhang2018fine, ravi2016deep}. Another example of \verb+\parencite{...}+: \parencite{bahdanau2014neural,imboden2018cardiorespiratory,motiian2017unified,murphy2012machine,ji20123d}.
-
-\subsection{References}
-The Reference Section, also called the Reference List or Cited Works List, is a list of the full-text details of the in-text citations that have been used in the main text. It includes information such as the name of the author(s), the year the source was published, the full title of the source, and the URL or page range. The Reference Section allows the reader to find the text easily and can be considered as the long-hand format of the in-text citation. It is found at the end of the piece of writing. The works in a reference section should be arranged first alphabetically and then further sorted chronologically if necessary.
-
-\subsubsection{Web references}
-As a minimum, the full URL and the date when the reference was last accessed should be given. Any further information, if known (DOI, author names, dates, reference to a source publication, etc.), should also be given. Web references can be listed separately (e.g., after the reference list) under a different heading if desired or can be included in the reference list. With standard numerical .bst files, only numerical citations are possible. With an author-year .bst file, both numerical and author-year citations are possible. 
-
-\subsubsection{Examples of reference style}
-You can find information about the examples of APA-style references to various sources at the following site:\\
-\url{https://apastyle.apa.org/style-grammar-guidelines/references/examples}.
-
-
-%--- Section ---%
+%------------------------------------------------------------------------
+% CONCLUSION
+%------------------------------------------------------------------------
 \section{Conclusions}
-Some conclusions here.
+A final section containing the main \textbf{conclusions} of your study has to be inserted. It should provide an answer to the research questions according to the presented results. Highlight the limitations of your study.
 
-%-------------------------------------------
-% Optional Contents
-%-------------------------------------------
+The report is not a ``travel diary'', do not try to write all you did but select the contents to be presented. If you include too many concepts in the report, you will probably be unable to discuss them adequately, and this may give the impression of superficial work.
 
-%--- Section ---%
-\section*{Conflicts of Interest} 
-The authors must declare conflicts of interest or state “The authors declare no conflict of interest.” Authors must identify and declare any personal circumstances or interests that may be perceived as inappropriately influencing the representation or interpretation of reported research results. A detailed definition of conflicts of interest is available at the following site: \url{https://academic.oup.com/journals/pages/authors/preparing_your_manuscript/ethics#conflict}.
+\paragraph{Sectioning}
+The report should contain all the relevant information explained before, even if the section and paragraph subdivision can (probably should) be modified. 
 
-%--- Section ---%
-\section*{Author Contributions}
-The authors must specify the individual contributions of all authors, identified by full names, according to NISO CrediT (Contributer Roles Taxonomy) described at the following site: \url{https://credit.niso.org/}. An example statement is as follows:
-
-\noindent\textbf{Kunwoo Lee}: Conceptualization, Methodology, Software. \textbf{Shuming Gao}: Data curation, Writing—original draft. \textbf{Sang Hun Lee}: Visualization, Investigation. \textbf{Jami J. Shah}: Supervision. \textbf{Hiromasa Suzuki}: Software, Validation. \textbf{Myung-Il Roh}: Writing—review \& editing.
-
-%--- Section ---%
-\section*{Funding}
-Cite all funding for your research, providing the grant number and the funder name. An example statement is as follows: This work is supported in part by funds from the National Science Foundation (NSF: \# 1636933 and \# 1920920). 
-
-If the funder is listed in the Crossref funder registry (\url{https://www.crossref.org/services/funder-registry/}), the funder name should appear exactly as it does in that database. Where grants were received by specific members of the author group, they should be identified by initials. 
-
-More information on funding agency requirements is available at  \url{https://academic.oup.com/pages/open-research/open-access/complying-with-funder-policies}.
-
-%--- Section ---%
-\section*{Data Availability}
-The data availability statement should provide information on where and under what conditions the data directly supporting the publication can be accessed. Sample data availability statements are available at the following site: \url{https://academic.oup.com/pages/open-research/research-data#Data%20Availability%20Statements}.
-
-%--- Section ---%
-\section*{Acknowledgments}
-The authors thank those people or institutions that have helped you in the preparation of the manuscript. 
-
-
-%-------------------------------------------
-% References
-%-------------------------------------------
-
-% Print bibliography
-\printbibliography
+\paragraph{Writing tip:} \underline{Decide} what to write in each section, subsection, and paragraph and which pictures to include \underline{before starting the writing}.
+A process to prepare a well-structured report could be:
+\begin{enumerate}
+    \item draft the structure of the report defining the sections and add the key figures, with a label;
+    \item for each paragraph write a couple of words or a short sentence to clarify its content, reference the key figures in the corresponding paragraph;
+    \item re-read the structure and decide which additional pictures and tables to insert, prepare the \texttt{figure} and \texttt{table} environments with a proper \texttt{caption} and label them;
+    \item deepen the description of each paragraph, adding references to the new figures and tables;
+    \item re-read the structure and check if it provides all information required: remind the sketch of the CFD simulation process reported in Figure~\ref{fig:cfdstep};
+    \item decide approximatively the space you want to dedicate to each paragraph/section;
+    \item write the report in each part.
+\end{enumerate}
 
 
 
+\subsection{Bibliography and citations example}
+Your report must contain a short Bibliography that lists the sources important to build the framework of your work and provide comparison data.
+The list of references is placed at the end of the manuscript after the chapter containing the conclusions.
+It is suggested to use the BibTeX package and save the bibliographic references in the file \verb|bibliography.bib|.
+This is indeed a database containing all the information about the references. To cite in your manuscript, use the \verb|\cite{}| command as follows:
+\\
+\textit{Here is how you cite bibliography entries: \cite{knuth74}, or multiple ones at once: \cite{knuth92,lamport94}}.
+\\
+The bibliography and list of references are generated automatically by running BibTeX \cite{bibtex} using the command \\ \verb|\bibliography{bibliography.bib}|.
 
-%-------------------------------------------
-% Appendix
-%-------------------------------------------
-% Activate the appendix in the doc
-% from here on sections are numerated with capital letters 
-%\appendix
+%----------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------
+\bibliography{bibliography.bib}
 
-% Change equation numbering format to be sequential within sections in the appendix
-\renewcommand\theequation{\Alph{section}\arabic{equation}} % Redefine equation numbering format
-\counterwithin*{equation}{section} % Number equations within sections
-\renewcommand\thefigure{\Alph{section}\arabic{figure}} % Redefine equation numbering format
-\counterwithin*{figure}{section} % Number equations within sections
-\renewcommand\thetable{\Alph{section}\arabic{table}} % Redefine equation numbering format
-\counterwithin*{table}{section} % Number equations within sections
 
-\begin{appendices}
+%----------------------------------------------------------------------
+% APPENDIX: LAtex TIPS
+%----------------------------------------------------------------------
+\clearpage
+\appendix
+\section{Some \texttt{LaTex} useful suggestions}
+\subsection{Structure of the text} 
+If necessary, subsections and paragraphs can be used to organize the report, using the commands
+\begin{verbatim}
+\subsection{Title of the subsection}
+\paragraph{Header of the paragraph}
+\end{verbatim}
+It is recommended to give a label to each section by using the command
+\begin{verbatim}
+\label{sec:section_name}%
+\end{verbatim}
+where the argument is just a text string that you'll use to reference that part
+as follows: Section~\ref{sec:probStatement} contains the main research question.
 
-\section*{Appendix}
-%--- Section ---%
-\section{Some Notation}
-\lipsum[10]
+\subsection{Equation examples}
+If needed, equations can be inserted as:
+\begin{subequations}
+    \label{eq:maxwell}
+    \begin{align}[left=\empheqlbrace]
+    \nabla\cdot \bm{D} & = \rho, \label{eq:maxwell1} \\
+    \nabla \times \bm{E} +  \frac{\partial \bm{B}}{\partial t} & = \bm{0}, \label{eq:maxwell2} \\
+    \nabla\cdot \bm{B} & = 0, \label{eq:maxwell3} \\
+    \nabla \times \bm{H} - \frac{\partial \bm{D}}{\partial t} &= \bm{J}. \label{eq:maxwell4}
+    \end{align}
+\end{subequations}
+Equation~\eqref{eq:maxwell} is automatically labeled,
+as well as Eq.~\eqref{eq:maxwell1} and Eq.~\eqref{eq:maxwell3}.
+Equations have to be numbered only if they are referenced in the text.
 
-\subsection{Appendix subsection title here}
-As shown in Equation \ref{eq_a1}, the section number is inserted in the equation number.
-\lipsum[11]
+Equations can be shown without the brace:
+\begin{align}
+    \nabla\cdot \bm{D} & = \rho, \label{eq:maxwell_multilabels1} \\
+    \nabla \times \bm{E} +  \frac{\partial \bm{B}}{\partial t} &= \bm{0}, \label{eq:maxwell_multilabels2} \\
+    \nabla\cdot \bm{B} & = 0, \label{eq:maxwell_multilabels3} \\
+    \nabla \times \bm{H} - \frac{\partial \bm{D}}{\partial t} &= \bm{J} \label{eq:maxwell_multilabels4}.
+\end{align}
+Equations~\eqref{eq:maxwell_multilabels1}--\eqref{eq:maxwell_multilabels4}
+are the same Maxwell's equations as in Eqs.~\eqref{eq:maxwell}
 
+
+The next equation is the same as before,
+but with just one label:
 \begin{equation}
-Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
-    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
-    + \frac{\ln(c_2/5)}{15} \right]
-\label{eq_a1}
+    \label{eq:maxwell_singlelabel}
+    \left\{
+    \begin{aligned}
+    \nabla\cdot \bm{D} & = \rho, \\
+    \nabla \times \bm{E} +  \frac{\partial \bm{B}}{\partial t} &= \bm{0},\\
+    \nabla\cdot \bm{B} & = 0, \\
+    \nabla \times \bm{H} - \frac{\partial \bm{D}}{\partial t} &= \bm{J}.
+    \end{aligned}
+    \right.
 \end{equation}
 
-\subsection{Appendix subsection  title here}
-As shown in Table \ref{tab_a1}, the section number is inserted in the table number.
-\lipsum[12]
+%----------------------------------------------------------------------
+% FIGURES AND TABLES
+%----------------------------------------------------------------------
+\subsection{Figures example}
+\label{subsec:figures}
+You can include pictures with the command
+\begin{verbatim}
+\includegraphics[options]{filename}
+\end{verbatim}
+within the \texttt{figure} environment, so that the exact position of the figure is determined by the software, as in Fig.~\ref{fig:cfdstep}.
+Generally, you do not need to specify an extension, because the \texttt{graphics} package looks for a supported graphics format automatically.
 
-\begin{table}[!ht]
-\caption{Sample table with three parts and five columns\label{tab_a1}}
-\begin{threeparttable}
-\begin{tabular*}{\columnwidth}{@{\extracolsep\fill}lllll@{\extracolsep\fill}}
-\toprule
-column 1 & column 2 & column 3 & column 4 & column 5\\
-\midrule
-row 1 & data 0 & data 1 & data 2 & data 3 \\
-row 2 & data 4 & data 5 & data 6 & data 7 \\
-row 3 & data 8 & data 9 & data 10 & data 11\\
-\bottomrule
-\end{tabular*}
-\end{threeparttable}
-\end{table}
-
-%--- Section ---%
-\section{Some More Notation}
-
-As shown in Figure \ref{fig:cat2}, the section number is inserted in the figure number.
-\lipsum[13]
-
-% figure b1
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.8\linewidth]{figures/cat_momo_2.jpg}
-\caption{\label{fig:cat2}This cat picture is located at the 'figures' folder.}
+\begin{figure}\centering
+    \includegraphics[width=0.3\textwidth]{Images/designExp}
+    \caption{Illustration of the key aspects in the CFD simulation, interpreted as an experiment designed and performed to answer a fluid-dynamic question}
+    \label{fig:cfdstep}
 \end{figure}
 
-\lipsum[14]
+Thanks to the \texttt{\textbackslash subfloat} command, a single figure, such as Figure~\ref{fig:quadtree2},
+can contain multiple sub-figures with their own caption and label, e.g. Figure~\ref{fig:polimi_logo1} and Figure~\ref{fig:polimi_logo2}. 
 
-\subsection{Appendix subsection title here}
-\lipsum[15]
+\begin{figure}
+    \centering
+    \subfloat[One PoliMi logo.\label{fig:polimi_logo1}]{
+        \includegraphics[scale=0.5]{Images/logo_polimi_scritta}
+    }
+    \quad
+    \subfloat[Another one PoliMi logo.\label{fig:polimi_logo2}]{
+        \includegraphics[scale=0.5]{Images/logo_polimi_scritta2}
+    }
+    \caption[]{Caption of the Figure.}
+    \label{fig:quadtree2}
+\end{figure}
 
-\end{appendices}
+\subsection{Tables example}
+\label{subsec:tables}
+Within the environments \texttt{table} and  \texttt{tabular} you can create very fancy tables as the one shown in Table~\ref{table:example}.
+\begin{table}
+    \caption{Caption of the Table.}
+    \centering 
+    \begin{tabular}{c c c }
+    \toprule
+    column1 & column2 & column3\\
+    \midrule
+    1 & 2 & 3 \\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    alpha & beta & gamma \\
+    \bottomrule
+    \end{tabular}
+    \label{table:example}
+\end{table}
 
+\subsection{Lists}
+How to insert itemized lists:
+\begin{itemize}
+    \item first item;
+    \item second item.
+\end{itemize}
+How to write numbered lists:
+\begin{enumerate}
+    \item first item;
+    \item second item.
+\end{enumerate}
+
+\vspace{0.3cm} % Insert vertical space
+
+\subsection{Use of copyrighted material}
+Each student is responsible for obtaining copyright permissions, if necessary, to include published material in the report.
+This applies typically to third-party material published by someone else.
+
+\subsection{Plagiarism}
+You have to be sure to respect the rules on Copyright and avoid involuntary plagiarism.
+It is allowed to take other persons' ideas only if the author and his original work are clearly mentioned.
+As stated in the Code of Ethics and Conduct, Politecnico di Milano \textit{promotes the integrity of research,
+condemns manipulation and the infringement of intellectual property}, and gives opportunity to all those
+who carry out research activities to have an adequate training on ethical conduct and integrity while doing research.
+To be sure to respect the copyright rules, read the guides on Copyright legislation and citation styles available
+at:
+\begin{verbatim}
+https://www.biblio.polimi.it/en/tools/courses-and-tutorials
+\end{verbatim}
+You can also attend the courses which are periodically organized on "Bibliographic citations and bibliography management".
+
+%-------------------------------------------------------------------------
+%	END OF YOUR DOCUMENT
+%-------------------------------------------------------------------------
 \end{document}
+
