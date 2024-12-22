@@ -92,7 +92,7 @@
 
 % Insert here the info that will be displayed on your Title page 
 % -> title of your work
-\renewcommand{\title}{CFD analysis of 2D diverterless supersonic inlet}
+\renewcommand{\title}{CFD Analysis of 2D Diverterless Supersonic Inlet}
 % -> Number of the group
 \newcommand{\group}{4}
 % You are less than 5, YOU HAVE to modify the file Configuration_files/title_page.tex, commenting the lines 19/20 about the fifth and/or fourth author
@@ -120,41 +120,69 @@
 %-------------------------------------------------------------------------
 % INTRODUCTION
 %-------------------------------------------------------------------------
-\section{Problem statement}
+\section{Research Question}
 \label{sec:probStatement}
-This file provides the template for the report of the group project of the course.
-It contains information about the content of the report, as well as some useful tips about \texttt{LaTex} and the \texttt{.tex} document. It is based on the \texttt{LaTeX} template for the article version of the MSc Thesis submission.
+%This file provides the template for the report of the group project of the course.
+%It contains information about the content of the report, as well as some useful tips about \texttt{LaTex} and the \texttt{.tex} document. It is based on the \texttt{LaTeX} template for the article version of the MSc Thesis submission.
 
-This first page must contain all the relevant information:
-\begin{itemize}
-    \item title of the report,
-    \item number of the group,
-    \item name and student ID number of all authors.
-\end{itemize}
-Fill this information in \textsf{Lines 95--103} of the \texttt{.tex} file.
+%This first page must contain all the relevant information:
+%\begin{itemize}
+%    \item title of the report,
+%    \item number of the group,
+%    \item name and student ID number of all authors.
+%\end{itemize}
+%Fill this information in \textsf{Lines 95--103} of the \texttt{.tex} file.
 
-Be sure to select a meaningful title, not necessarily the one indicated in the list of group projects.
+%Be sure to select a meaningful title, not necessarily the one indicated in the list of group projects.
 
-\textbf{The maximum length allowed for the pdf file is 15 pages}, including the bibliography. The exceeding pages will be discarded if a longer file is delivered. This could result in submitting incomplete work which will be evaluated accordingly.
+%\textbf{The maximum length allowed for the pdf file is 15 pages}, including the bibliography. The exceeding pages will be discarded if a longer file is delivered. This could result in submitting incomplete work which will be evaluated accordingly.
 
-The first section of the report explains the \textbf{research question} providing minimal information to understand it. A title more specific than  \textbf{Problem statement} (as it is called in this template) should be chosen for this section.
-This section gives an overview of the problem you are solving, including the main \textbf{underlying hypothesis} and the goal of the work. It can include a concise scientific context or background important to understanding the reference solution or data. Avoid a detailed historical literature review of the problem under investigation; instead, make good use of citations. \\
+%The first section of the report explains the \textbf{research question} providing minimal information to understand it. A title more specific than  \textbf{Problem statement} (as it is called in this template) should be chosen for this section.
+%This section gives an overview of the problem you are solving, including the main \textbf{underlying hypothesis} and the goal of the work. It can include a concise scientific context or background important to understanding the reference solution or data. Avoid a detailed historical literature review of the problem under investigation; instead, make good use of citations. \\
 
- In order to improve flow features at the inlet of aircraft engines, different techniques have been implemented. Among boundary layer diverters and bleed systems, addition of compression surfaces has proved to be a simple yet effective solution to improve pressure recovery and reduce distortion at the AIP. DSI are state-of-the-art applications, capable of diverting the boundary layer, hence reducing its ingestion in the intake and flow separation, at a low weight and cost. However, the shape of the compression bump must be well designed to obtain optimal results. Computational Fluid Dynamics (CFD) is a powerful tool for the assessment of performance of DSI with respect to the shape of the bump. Different 3D analyses of the flow field on a DSI have been carried out.
+ %In order to improve flow features at the inlet of aircraft engines, different techniques have been implemented. Among boundary layer diverters and bleed systems, addition of compression surfaces has proved to be a simple yet effective solution to improve pressure recovery and reduce distortion at the AIP. DSI are state-of-the-art applications, capable of diverting the boundary layer, hence reducing its ingestion in the intake and flow separation, at a low weight and cost. However, the shape of the compression bump must be well designed to obtain optimal results. Computational Fluid Dynamics (CFD) is a powerful tool for the assessment of performance of DSI with respect to the shape of the bump. Different 3D analyses of the flow field on a DSI have been carried out.
 
-
+The design of supersonic inlets is critical in aerospace engineering, particularly for high-speed aircraft and advanced propulsion systems. These systems face critical challenges, including the need to maintain a defined mass flow rate and pressure at the inlet, while managing the complexities of supersonic flows and boundary layer buildup along the aircraft body. \\
+The purpose of this paper is to simulate the effects of a compression surface, namely a bump, on the pressure recovery and on the boundary layer. The objective is to evaluate the effectiveness of the selected bump geometry in improving pressure recovery and controlling boundary layer thickness across both subsonic and supersonic flow regimes.\\
+To achieve this, a two dimensional (2D) computational fluid dynamics (CFD) analysis is conducted. Initially, the methodology is validated against existing literature data for a geometry without the bump, focusing solely on the cowl lip. This ensures the quality of the computational mesh and the reliability of the numerical approach. Following validation, the bump is incorporated into the analysis, and its influence on the flow is assessed under both subsonic and supersonic conditions. The findings provide insight into the suitability of the proposed bump geometry for enhancing performance in various flow regimes, under the limited two dimensional framework.
+A detailed flowchart is reported in FIGURE X(METTERE FLOWCHART TIPO QUELLO MESSO DALLA BARBARA IN BASSO).
 
 %------------------------------------------------------------------------
 % NUMERICAL METHODOLOGY
 %------------------------------------------------------------------------
 \section{Numerical simulation methodology}
 \label{sec:eqs}
-This section describes how the numerical simulations are carried out. It provides details and justifications about the modeling choices, the meshes, and the numerical schemes.
-Do not include the \texttt{.config} file or parts of it. Describe the options you consider important using words, rather than inserting option strings from the file.
+%This section describes how the numerical simulations are carried out. It provides details and justifications about the modeling choices, the meshes, and the numerical schemes. Do not include the \texttt{.config} file or parts of it. Describe the options you consider important using words, rather than inserting option strings from the file.
+%The goal of this section is to demonstrate your skills with CFD methodology and to convince us that the results shown in the next sections are trustworthy.
+%\textbf{Suggestion:} modify the title of this section and the next (sub-)sections as needed. A focused, specific title of each (sub-)section helps in writing the content of that part.
 
-The goal of this section is to demonstrate your skills with CFD methodology and to convince us that the results shown in the next sections are trustworthy.
+In the following sections, the framework used to set up the simulation is detailed for both cases: the baseline geometry featuring only the cowl lip and the geometry incorporating the bump, retaining the same cowl lip.
+\subsection{Geometry}
+\label{sec:geom}
+To correctly asses the research question and validate the approach, the geometry was taken from the literature case to be compared with. Thus, regarding the cowl lip, the dimensions were extrapolated from the provided information in the literature\cite{AroMontes}.\\
+The bump geometry was created from the hyperbolic approximation of the cone-flow streamlines\cite{BUMPGEOM}.
+\begin{equation}
+f_\text{bump}(x,y) = \frac{\sqrt{x^2 \tan^2(\delta) + c}}{\left(\frac{1}{\cos(\arctan(\frac{y}{K}))}\right)^2} \cdot A \cdot B
+%f_\text{bump}(x,y) = \frac{\sqrt{x^2 \tan^2(\delta) + c}}{\left(\frac{1}{\cos(\arctan(\frac{y}{K}))}\right)^2} \sin(x) \sin\left(\frac{y + \pi}{2}\right)
+\label{eq:BUMP GEOM}
+\end{equation}
+\autoref{eq:BUMP GEOM} describes the three dimensional geometry of the bump, which was sectioned at the mid plane by selecting the value of $y=0$. Moreover, the coefficients that tune the bump's geometry were chosen in order to obtain the wanted bump geometry coinciding with the choice of the optimal bump configuration found in the literature and are reported in \autoref{tab:Bump param}\cite{TEXT01}.
 
-\textbf{Suggestion:} modify the title of this section and the next (sub-)sections as needed. A focused, specific title of each (sub-)section helps in writing the content of that part.
+\vspace{-0.2cm}
+\begin{table}[H]
+    \centering
+    \scalebox{0.9}{\begin{tabularx}{\textwidth}{*{6}{| >     {\centering\arraybackslash}X}|}
+    \hline
+        \textbf{BUMP} & $\delta$ & c & K & A & B \\
+        \hline
+         & $\pi/15$ & 0 & 1.0 & $\sin{x}$ & $\sin\left(\frac{y + \pi}{2}\right)$ \\
+        \hline
+    \end{tabularx}}
+    \caption{Characterizing bump parameters}
+    \label{tab:Bump param}
+\end{table}
+\vspace{-0.4cm}
+Once the bump was defined, the position and the dimensions of the cowl lip were defined relative to the bump and compliant with the one in the literature\cite{TEXT01}. 
 
 \subsection{Mesh construction}\label{sec:mesh}
 Provide information about the meshing process: identify any relevant challenges and explain how you have overcome them.
